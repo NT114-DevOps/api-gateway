@@ -9,9 +9,6 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-// Set port
-const port = process.env.PORT || 8000;
-
 // Redirect
 app.use('/posts', proxy(process.env.POST_SERVICE));
 app.use('/comments', proxy(process.env.COMMENT_SERVICE));
@@ -21,6 +18,4 @@ app.get('/', (req, res) => {
     res.send('API Gateway is running!');
 })
 
-app.listen(port, () => {
-    console.log(`API Gateway is running on port ${process.env.PORT}`);
-})
+module.exports = app;
