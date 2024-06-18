@@ -21,10 +21,6 @@ jobs:
                 with:
                     username: ${{ secrets.DOCKERHUB_USERNAME }}
                     password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-            -   
-                name: Setup image tag
-                run: echo "SHORT_SHA=`echo ${{ github.sha }} | cut -c1-8`" >> $GITHUB_ENV
             -
                 name: Build and push
                 uses: docker/build-push-action@v5
@@ -49,7 +45,7 @@ jobs:
                 run: |
                     git config --global user.email "ntbquoc2015@gmail.com"
                     git config --global user.name "TonyQ2k3"
-                    sed -i 's#tonyq2k3/gateway-service:[^[:space:]]*$#tonyq2k3/gateway-service:release-${{ github.sha }}}#g' ./production/microservices/gateway-deploy.yaml
+                    sed -i 's#tonyq2k3/gateway-service:[^[:space:]]*$#tonyq2k3/gateway-service:release-${{ github.sha }}#g' ./production/microservices/gateway-deploy.yaml
                     git add ./production/microservices/gateway-deploy.yaml
                     git commit -m "Update API gateway version to release-${SHORT_SHA} version in production environment"
                     git push origin main
